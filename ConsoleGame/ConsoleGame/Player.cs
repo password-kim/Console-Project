@@ -76,18 +76,22 @@ namespace ConsoleGame
             if (key == ConsoleKey.LeftArrow)
             {
                 _x = Math.Clamp(_x - 1, Constants.MIN_X, Constants.MAX_X);
+                _playerDirection = Direction.Left;
             }
             if (key == ConsoleKey.RightArrow)
             {
                 _x = Math.Clamp(_x + 1, Constants.MIN_X, Constants.MAX_X);
+                _playerDirection = Direction.Right;
             }
             if (key == ConsoleKey.UpArrow)
             {
-                _y = Math.Clamp(_y - 1, Constants.MIN_Y, Constants.MAX_Y); 
+                _y = Math.Clamp(_y - 1, Constants.MIN_Y, Constants.MAX_Y);
+                _playerDirection = Direction.Up;
             }
             if (key == ConsoleKey.DownArrow)
             {
                 _y = Math.Clamp(_y + 1, Constants.MIN_Y, Constants.MAX_Y);
+                _playerDirection = Direction.Down;
             }
         }
 
