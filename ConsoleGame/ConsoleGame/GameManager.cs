@@ -11,7 +11,7 @@ namespace ConsoleGame
         public static void ExitWithError(string msg)
         {
             Console.Clear();
-            Console.WriteLine(msg);
+            Console.Write(msg);
             Environment.Exit(0);
         }
 

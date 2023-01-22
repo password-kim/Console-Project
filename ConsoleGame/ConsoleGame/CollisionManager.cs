@@ -10,7 +10,7 @@ namespace ConsoleGame
 {
     internal class CollisionManager
     {
-        public void OnCollisionWithWall(Player player, Wall[] walls)
+        public static void OnCollisionWithWall(Player player, Wall[] walls)
         {
             for (int wallId = 0; wallId < Constants.WALL_COUNT; ++wallId)
             {
@@ -38,7 +38,7 @@ namespace ConsoleGame
             
         }
 
-        public void OnCollisionWithNpc(Player player, Npc[] npcs)
+        public static void OnCollisionWithNpc(Player player, Npc[] npcs)
         {
             for (int npcId = 0; npcId < Constants.NPC_COUNT; ++npcId)
             {

@@ -35,5 +35,14 @@ namespace ConsoleGame
             }
         }
 
+        public void SayToPlayer()
+        {
+            Console.SetCursorPosition(Constants.DIALOG_MIN_X, Constants.DIALOG_MIN_Y);
+            Console.Write("안녕하신가!! 경마장으로 갈텐가?");
+            Console.SetCursorPosition(Constants.DIALOG_MIN_X, Constants.DIALOG_MIN_Y + 1);
+            Console.Write("[1] 간다.");
+            Console.SetCursorPosition(Constants.DIALOG_MIN_X, Constants.DIALOG_MIN_Y + 2);
+            Console.Write("[2] 안간다.");
+        }
     }
 }

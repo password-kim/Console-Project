@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleGame
 {
-    internal class Dialog
+    internal class Horse
     {
         private int _x;
         private int _y;
         private char _shape;
-        
 
         public int X
         {
@@ -48,6 +47,5 @@ namespace ConsoleGame
                 _shape = value;
             }
         }
-
     }
 }
