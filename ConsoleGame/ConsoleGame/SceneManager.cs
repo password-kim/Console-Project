@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleGame
+﻿namespace ConsoleGame
 {
     enum Scene
     {
@@ -142,70 +134,6 @@ namespace ConsoleGame
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┃' };
                             dialogCounts++;
                             break;
-                        case 'R':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'R' };
-                            dialogCounts++;
-                            break;
-                        case 'a':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'a' };
-                            dialogCounts++;
-                            break;
-                        case 'k':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'k' };
-                            dialogCounts++;
-                            break;
-                        case '1':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '1' };
-                            dialogCounts++;
-                            break;
-                        case '2':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '2' };
-                            dialogCounts++;
-                            break;
-                        case '3':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '3' };
-                            dialogCounts++;
-                            break;
-                        case '4':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '4' };
-                            dialogCounts++;
-                            break;
-                        case '5':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '5' };
-                            dialogCounts++;
-                            break;
-                        case '6':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '6' };
-                            dialogCounts++;
-                            break;
-                        case 's':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 's' };
-                            dialogCounts++;
-                            break;
-                        case 't':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 't' };
-                            dialogCounts++;
-                            break;
-                        case 'n':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'n' };
-                            dialogCounts++;
-                            break;
-                        case 'd':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'd' };
-                            dialogCounts++;
-                            break;
-                        case 'r':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'r' };
-                            dialogCounts++;
-                            break;
-                        case 'h':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = 'h' };
-                            dialogCounts++;
-                            break;
-                        case ':':
-                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = ':' };
-                            dialogCounts++;
-                            break;
                         case 'A':
                             horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'A' };
                             horseCounts++;
@@ -228,6 +156,22 @@ namespace ConsoleGame
                             break;
                         case 'F':
                             horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'F' };
+                            horseCounts++;
+                            break;
+                        case 'G':
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'G' };
+                            horseCounts++;
+                            break;
+                        case 'H':
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'H' };
+                            horseCounts++;
+                            break;
+                        case 'I':
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'I' };
+                            horseCounts++;
+                            break;
+                        case 'J':
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'J' };
                             horseCounts++;
                             break;
                         case ' ':
@@ -320,6 +264,10 @@ namespace ConsoleGame
             Horse[] horses = new Horse[Constants.HORSE_COUNT];
             string[] scene = LoadSene("RaceTrack");
             ParseRaceScene(scene, out walls, out dialogs, out horses);
+            int[] rank = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            string playerChoice;
+            bool isChoice = false;
+            bool isRaceEnd = false;
 
             while (true)
             {
@@ -344,25 +292,84 @@ namespace ConsoleGame
                     RenderManager.RenderObject(horses[horseId].X, horses[horseId].Y, horses[horseId].Shape);
                 }
 
+                RenderManager.ShowRank(rank);
+                //RenderManager.ShowRankTest(rank);
 
                 // ========= Input ==============
-                ConsoleKey key = Console.ReadKey().Key;
-                //if (Console.KeyAvailable)
-                //{
-                //    key = Console.ReadKey().Key;
-                //}
+                ConsoleKey key = ConsoleKey.NoName;
+                if (Console.KeyAvailable)
+                {
+                    key = Console.ReadKey().Key;
+                }
+
+                if (false == isChoice)
+                {
+                    Console.SetCursorPosition(25, 15);
+                    Console.Write("몇번말에 거시겠습니까?");
+                    playerChoice = Console.ReadLine();
+                    isChoice = true;
+                }
 
 
                 // ========= Update =============
+
+
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
-                    horses[horseId].X += (int)(rand.NextDouble()* 3);
-                    if (horses[horseId].X >= 80)
+
+                    horses[horseId].X += (int)(rand.NextDouble() * 3);
+                    if (horses[horseId].X >= 95)
                     {
-                        horses[horseId].X = 80;
+                        horses[horseId].X = 95;
                     }
                 }
 
+
+                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
+                {
+                    if (horses[horseId].X == 95)
+                    {
+                        continue;
+                    }
+                    rank[horseId] = 1;
+                    for (int horseId2 = 0; horseId2 < Constants.HORSE_COUNT; ++horseId2)
+                    {
+                        if (horseId == horseId2)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (horses[horseId].X < horses[horseId2].X)
+                            {
+                                rank[horseId]++;
+                            }
+                        }
+                    }
+                }
+
+                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
+                {
+                    if (horses[horseId].X == 95)
+                    {
+                        isRaceEnd = true;
+                    }
+                    else
+                    {
+                        isRaceEnd = false;
+                        break;
+                    }
+                }
+
+                if (isRaceEnd)
+                {
+                    Console.SetCursorPosition(25, 15);
+                    Console.Write("축하드립니다!!");
+                }
+
+
+                // Temp
+                // 말들의 위치를 처음으로 되돌린다.
                 if (key == ConsoleKey.R)
                 {
                     for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
@@ -371,7 +378,25 @@ namespace ConsoleGame
                     }
                 }
 
-                //Thread.Sleep(250);
+                if (key == ConsoleKey.C)
+                {
+                    RenderManager.ShowBackDialog();
+                    Console.SetCursorPosition(53, 14);
+                    string input = Console.ReadLine();
+
+                    if (input == "y" || input == "yes")
+                    {
+                        SceneManager._sceneType = Scene.Town;
+                    }
+                }
+
+
+                if (SceneManager._sceneType != Scene.RaceTrack)
+                {
+                    break;
+                }
+
+                Thread.Sleep(200);
             }
 
 

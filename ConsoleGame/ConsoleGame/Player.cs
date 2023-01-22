@@ -27,6 +27,7 @@ namespace ConsoleGame
     {
         private int _x;
         private int _y;
+        private static int _money = 0;
         private string _icon;
         private Direction _playerDirection;
         private PlayerState _playerState;
@@ -52,6 +53,18 @@ namespace ConsoleGame
             set
             {
                 _y = value;
+            }
+        }
+
+        public static int Money
+        {
+            get
+            {
+                return _money;
+            }
+            set
+            {
+                _money = value;
             }
         }
 
