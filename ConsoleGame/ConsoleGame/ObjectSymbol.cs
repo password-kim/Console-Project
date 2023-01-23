@@ -10,6 +10,7 @@ namespace ConsoleGame
     {
         public const char Player = 'K';
         public const char Wall = '▒';
-        public const char Npc = 'N';
+        public const char RaceNpc = 'R';
+        public const char ShopNpc = 'S';
     }
 }

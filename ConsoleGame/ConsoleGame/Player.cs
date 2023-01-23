@@ -143,19 +143,42 @@ namespace ConsoleGame
                 // 플레이어의 상하좌우에 npc가 있는지 체크하는 for문.
                 for (int i = 0; i < 4; ++i)
                 {
-                    for (int npcId = 0; npcId < Constants.NPC_COUNT; ++npcId)
+                    for (int npcId = 0; npcId < npcs.Length; ++npcId)
                     {
                         if (_x + dirX[i] == npcs[npcId].X && _y + dirY[i] == npcs[npcId].Y)
                         {
+                            string playerInput = "";
                             _playerState = PlayerState.Talk;
-                            npcs[npcId].SayToPlayer();
-                            Console.SetCursorPosition(Constants.DIALOG_MIN_X, Constants.DIALOG_MIN_Y + 3);
-                            string playerInput = Console.ReadLine();
+                            switch (npcs[npcId].Type)
+                            {
+                                case NpcType.RaceNpc:
+                                    npcs[npcId].SayToPlayer(npcs[npcId].Type);
+                                    Console.SetCursorPosition(Constants.TOWN_DIALOG_MIN_X + 2, Constants.TOWN_DIALOG_MIN_Y + 3);
+                                    playerInput = Console.ReadLine();
+                                    break;
+                                case NpcType.ShopNpc:
+                                    npcs[npcId].SayToPlayer(npcs[npcId].Type);
+                                    Console.SetCursorPosition(Constants.SHOP_DIALOG_MIN_X + 2, Constants.SHOP_DIALOG_MIN_Y + 3);
+                                    playerInput = Console.ReadLine();
+                                    break;
+                                default:
+                                    GameManager.ExitWithError($"잘못된 NPC타입입니다. {npcs[npcId].Type}");
+                                    break;
+                            }
 
                             switch (playerInput)
                             {
                                 case "1":
-                                    SceneManager._sceneType = Scene.RaceTrack;
+                                    if (npcs[npcId].Type == NpcType.RaceNpc)
+                                    {
+                                        SceneManager._sceneType = Scene.RaceTrack;
+                                        SceneManager._prevSceneType = Scene.Town;
+                                    }
+                                    if (npcs[npcId].Type == NpcType.ShopNpc)
+                                    {
+                                        // TODO
+                                        // 가챠구현.
+                                    }
                                     break;
                                 case "2":
                                     break;

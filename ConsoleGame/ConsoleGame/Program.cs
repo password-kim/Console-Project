@@ -24,30 +24,14 @@ namespace ConsoleGame
                     case Scene.RaceTrack:
                         SceneManager.RaceScene();
                         break;
+                    case Scene.Shop:
+                        SceneManager.ShopScene();
+                        break;
                     default:
                         GameManager.ExitWithError($"잘못된 Scene타입입니다. {SceneManager._sceneType}");
                         return;
                 }
             }
-            //if (userInput != null)
-            //{
-            //    switch (userInput)
-            //    {
-            //        case "1":
-            //            SceneManager.Town();
-            //            break;
-            //        case "2":
-            //            RenderManager.RenderGameExit();
-            //            Environment.Exit(2);
-            //            break;
-            //        default:
-            //            GameManager.ExitWithError("잘못된 입력입니다. 1 혹은 2만 눌러주세요.");
-            //            return;
-            //    }
-            //}
-
-            
-
         }
     }
 }
