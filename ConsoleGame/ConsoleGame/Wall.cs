@@ -10,6 +10,7 @@ namespace ConsoleGame
     {
         private int _x;
         private int _y;
+        private char _shape;
 
         public int X
         {
@@ -32,6 +33,18 @@ namespace ConsoleGame
             set
             {
                 _y = value;
+            }
+        }
+
+        public char Shape
+        {
+            get
+            {
+                return _shape;
+            }
+            set
+            {
+                _shape = value;
             }
         }
     }

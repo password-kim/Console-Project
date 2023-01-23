@@ -72,25 +72,40 @@ namespace ConsoleGame
 
         }
 
-        public static void ShowRank(int[] rank, string playerChoice, int[] horsesSpeed)
+        public static void ShowRank(Horse[] horses, int playerChoice)
         {
+            bool[] isPrintLine = new bool[11];
             Console.SetCursorPosition(1, 14);
             Console.Write("Rank");
-            for (int i = 0; i < Constants.HORSE_COUNT; ++i)
+
+            for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
             {
-                if (i == int.Parse(playerChoice) - 1)
+                int l = horses[horseId].Rank - 1;
+                while (true)
+                {
+                    if (isPrintLine[l])
+                    {
+                        l++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (horseId == playerChoice - 1)
                 {
                     ConsoleColor prev = ConsoleColor.Yellow;
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.SetCursorPosition(1, 15 + i);
-                    Console.Write($"{i + 1,2}번마  {rank[i],2}등  {(horsesSpeed[i] * RandomManager.GetInctance.Next(10, 14)), 3}km/h");
+                    Console.SetCursorPosition(1, 15 + l);
+                    Console.Write($"{horseId + 1,2}번마  {horses[horseId].Rank,2}등  {(horses[horseId].HorseSpeed * RandomManager.GetInctance.Next(10, 14)),3}km/h");
                     Console.ForegroundColor = prev;
-
+                    isPrintLine[l] = true;
                 }
                 else
                 {
-                    Console.SetCursorPosition(1, 15 + i);
-                    Console.Write($"{i + 1,2}번마  {rank[i],2}등  {(horsesSpeed[i] * RandomManager.GetInctance.Next(10, 14)), 3}km/h");
+                    Console.SetCursorPosition(1, 15 + l);
+                    Console.Write($"{horseId + 1,2}번마  {horses[horseId].Rank,2}등  {(horses[horseId].HorseSpeed * RandomManager.GetInctance.Next(10, 14)),3}km/h");
+                    isPrintLine[l] = true;
                 }
             }
         }
@@ -107,6 +122,17 @@ namespace ConsoleGame
             Console.Write($"Player Y : {player.Y}");
             Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 4);
             Console.Write($"Player Money : {Player.Money}");
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 5);
+            Console.Write("<Card Collection>");
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 6);
+            Console.Write($"Choi : {GameManager.Cards[0]}");
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 7);
+            Console.Write($"Mino : {GameManager.Cards[1]}");
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 8);
+            Console.Write($"HSJ  : {GameManager.Cards[2]}");
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 9);
+            Console.Write($"Doik : {GameManager.Cards[3]}");
+
         }
 
         public static void ShowRankTest(int[] rank)
@@ -124,6 +150,12 @@ namespace ConsoleGame
             Console.SetCursorPosition(21, 15);
             Console.Write($"{rank[5]}");
         }
+
+        public static void ShowGachaResult(Card card)
+        {
+            Console.WriteLine();
+        }
+
     }
 
     

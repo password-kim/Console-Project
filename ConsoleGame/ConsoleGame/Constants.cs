@@ -17,20 +17,21 @@ namespace ConsoleGame
         public const int TOWN_DIALOG_MIN_Y = 22;
 
         public const int TOWN_WALL_COUNT = 114;
-        public const int TOWN_DIALOG_COUNT = 126;
+        public const int TOWN_DIALOG_COUNT = 90;
         public const int TOWN_NPC_COUNT = 1;
 
         public const int RACE_WALL_COUNT = 188;
-        public const int RACE_DIALOG_COUNT = 70;
+        public const int RACE_DIALOG_COUNT = 68;
 
         public const int HORSE_COUNT = 10;
 
         public const int SHOP_NPC_COUNT = 1;
-        public const int SHOP_WALL_COUNT = 84;
-        public const int SHOP_DIALOG_COUNT = 78;
+        public const int SHOP_WALL_COUNT = 82;
+        public const int SHOP_DIALOG_COUNT = 70;
 
         public const int SHOP_DIALOG_MIN_X = 1;
         public const int SHOP_DIALOG_MIN_Y = 17;
+        public const int FIRST_PRICE = 100;
 
     }
 }

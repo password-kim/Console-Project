@@ -51,38 +51,34 @@
                             player = new Player { X = x, Y = y };
                             break;
                         case ObjectSymbol.Wall:
-                            walls[wallCounts] = new Wall { X = x, Y = y };
+                            walls[wallCounts] = new Wall { X = x, Y = y, Shape = '▒' };
                             wallCounts++;
                             break;
                         case ObjectSymbol.RaceNpc:
                             npcs[npcCounts] = new Npc { X = x, Y = y, Type = NpcType.RaceNpc };
                             npcCounts++;
                             break;
-                        case ObjectSymbol.ShopNpc:
-                            npcs[npcCounts] = new Npc { X = x, Y = y, Type = NpcType.ShopNpc };
-                            npcCounts++;
-                            break;
-                        case '┌':
+                        case ObjectSymbol.DIALOG_LT:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┌' };
                             dialogCounts++;
                             break;
-                        case '┐':
+                        case ObjectSymbol.DIALOG_RT:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┐' };
                             dialogCounts++;
                             break;
-                        case '└':
+                        case ObjectSymbol.DIALOG_LD:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '└' };
                             dialogCounts++;
                             break;
-                        case '┘':
+                        case ObjectSymbol.DIALOG_RD:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┘' };
                             dialogCounts++;
                             break;
-                        case '━':
+                        case ObjectSymbol.DIALOG_H:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '━' };
                             dialogCounts++;
                             break;
-                        case '┃':
+                        case ObjectSymbol.DIALOG_V:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┃' };
                             dialogCounts++;
                             break;
@@ -113,71 +109,71 @@
                     switch (scene[y][x])
                     {
                         case ObjectSymbol.Wall:
-                            walls[wallCounts] = new Wall { X = x, Y = y };
+                            walls[wallCounts] = new Wall { X = x, Y = y, Shape = '▒' };
                             wallCounts++;
                             break;
-                        case '┌':
+                        case ObjectSymbol.DIALOG_LT:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┌' };
                             dialogCounts++;
                             break;
-                        case '┐':
+                        case ObjectSymbol.DIALOG_RT:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┐' };
                             dialogCounts++;
                             break;
-                        case '└':
+                        case ObjectSymbol.DIALOG_LD:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '└' };
                             dialogCounts++;
                             break;
-                        case '┘':
+                        case ObjectSymbol.DIALOG_RD:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┘' };
                             dialogCounts++;
                             break;
-                        case '─':
+                        case ObjectSymbol.DIALOG_H:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '─' };
                             dialogCounts++;
                             break;
-                        case '┃':
+                        case ObjectSymbol.DIALOG_V:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┃' };
                             dialogCounts++;
                             break;
                         case 'A':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'A' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'A', Id = 1 };
                             horseCounts++;
                             break;
                         case 'B':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'B' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'B', Id = 2 };
                             horseCounts++;
                             break;
                         case 'C':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'C' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'C', Id = 3 };
                             horseCounts++;
                             break;
                         case 'D':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'D' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'D', Id = 4 };
                             horseCounts++;
                             break;
                         case 'E':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'E' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'E', Id =5 };
                             horseCounts++;
                             break;
                         case 'F':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'F' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'F', Id = 6 };
                             horseCounts++;
                             break;
                         case 'G':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'G' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'G', Id = 7 };
                             horseCounts++;
                             break;
                         case 'H':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'H' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'H', Id = 8 };
                             horseCounts++;
                             break;
                         case 'I':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'I' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'I', Id = 9 };
                             horseCounts++;
                             break;
                         case 'J':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'J' };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'J', Id = 10 };
                             horseCounts++;
                             break;
                         case ' ':
@@ -211,34 +207,34 @@
                             player = new Player { X = x, Y = y };
                             break;
                         case ObjectSymbol.Wall:
-                            walls[wallCounts] = new Wall { X = x, Y = y };
+                            walls[wallCounts] = new Wall { X = x, Y = y, Shape = '▒' };
                             wallCounts++;
                             break;
                         case ObjectSymbol.ShopNpc:
                             npcs[npcCounts] = new Npc { X = x, Y = y, Type = NpcType.ShopNpc };
                             npcCounts++;
                             break;
-                        case '┌':
+                        case ObjectSymbol.DIALOG_LT:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┌' };
                             dialogCounts++;
                             break;
-                        case '┐':
+                        case ObjectSymbol.DIALOG_RT:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┐' };
                             dialogCounts++;
                             break;
-                        case '└':
+                        case ObjectSymbol.DIALOG_LD:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '└' };
                             dialogCounts++;
                             break;
-                        case '┘':
+                        case ObjectSymbol.DIALOG_RD:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┘' };
                             dialogCounts++;
                             break;
-                        case '━':
+                        case ObjectSymbol.DIALOG_H:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '━' };
                             dialogCounts++;
                             break;
-                        case '┃':
+                        case ObjectSymbol.DIALOG_V:
                             dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┃' };
                             dialogCounts++;
                             break;
@@ -303,6 +299,12 @@
                     RenderManager.RenderObject(player.X, player.Y, ObjectSymbol.Player);
 
                 }
+                else if(SceneManager._prevSceneType == Scene.RaceTrack)
+                {
+                    player.X = 34;
+                    player.Y = 10;
+                    RenderManager.RenderObject(player.X, player.Y, ObjectSymbol.Player);
+                }
                 else
                 {
                     RenderManager.RenderObject(player.X, player.Y, ObjectSymbol.Player);
@@ -314,7 +316,7 @@
                 // 벽 출력.
                 for (int wallId = 0; wallId < Constants.TOWN_WALL_COUNT; ++wallId)
                 {
-                    RenderManager.RenderObject(walls[wallId].X, walls[wallId].Y, ObjectSymbol.Wall);
+                    RenderManager.RenderObject(walls[wallId].X, walls[wallId].Y, walls[wallId].Shape);
                 }
 
                 // 대화창 출력
@@ -364,16 +366,14 @@
 
         public static void RaceScene()
         {
-            Random rand = new Random();
             Wall[] walls = new Wall[Constants.RACE_WALL_COUNT];
             Dialog[] dialogs = new Dialog[Constants.RACE_DIALOG_COUNT];
             Horse[] horses = new Horse[Constants.HORSE_COUNT];
             int[] horsesSpeed = new int[Constants.HORSE_COUNT];
             string[] scene = LoadSene("RaceTrack");
             ParseRaceScene(scene, out walls, out dialogs, out horses);
-            int[] rank = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            int[] price = { 1000, 900, 800, 700, 600, 300, 200, 100, 50, 0 };
-            string playerChoice = "1";
+            int[] price = { 1000, 900, 800, 100, 100, 100, 50, 30, 10, 0 };
+            int playerChoice = 0;
             bool isChoice = false;
             bool isRaceEnd = false;
 
@@ -385,7 +385,7 @@
                 // 벽 출력.
                 for (int wallId = 0; wallId < Constants.RACE_WALL_COUNT; ++wallId)
                 {
-                    RenderManager.RenderObject(walls[wallId].X, walls[wallId].Y, ObjectSymbol.Wall);
+                    RenderManager.RenderObject(walls[wallId].X, walls[wallId].Y, walls[wallId].Shape);
                 }
 
                 // Dialog 출력.
@@ -397,7 +397,7 @@
                 // 말 출력.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
-                    if (horseId == int.Parse(playerChoice) - 1)
+                    if (horses[horseId].Id == playerChoice)
                     {
                         ConsoleColor prev = ConsoleColor.Yellow;
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -410,11 +410,12 @@
                     }
                 }
 
-                RenderManager.ShowRank(rank, playerChoice, horsesSpeed);
-                //RenderManager.ShowRankTest(rank);
+                // 말 순위표 출력.
+                RenderManager.ShowRank(horses, playerChoice);
 
                 // ========= Input ==============
                 ConsoleKey key = ConsoleKey.NoName;
+
                 if (Console.KeyAvailable)
                 {
                     key = Console.ReadKey().Key;
@@ -422,47 +423,54 @@
 
                 if (false == isChoice)
                 {
-                    Console.SetCursorPosition(25, 15);
-                    Console.Write("몇번말에 거시겠습니까?");
-                    playerChoice = Console.ReadLine();
+                    while (true)
+                    {
+                        playerChoice = GameManager.ChoiceHorse(playerChoice);
+                        if (1 <= playerChoice && playerChoice <= 10)
+                        {
+                            break;
+                        }
+                    }
                     isChoice = true;
                 }
 
 
                 // ========= Update =============
 
+                // 말 속력출력.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
-                    horsesSpeed[horseId] = (int)(1 + RandomManager.GetInctance.NextDouble() * 3);
+                    horses[horseId].HorseSpeed = (int)(1 + RandomManager.GetInctance.NextDouble() * 3);
 
                 }
 
-
+                // 말 속력에 따른 X값 업데이트.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
-                    horses[horseId].X += horsesSpeed[horseId];
+                    horses[horseId].X += horses[horseId].HorseSpeed;
                     if (horses[horseId].X >= 95)
                     {
                         horses[horseId].X = 95;
                     }
                 }
 
+                // 결승에 도달하면 속도 0으로 초기화.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
                     if (horses[horseId].X == 95)
                     {
-                        horsesSpeed[horseId] = 0;
+                        horses[horseId].HorseSpeed = 0;
                     }
                 }
 
-
+                // 말 순위계산.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
                     if (horses[horseId].X == 95)
                     {
                         continue;
                     }
-                    rank[horseId] = 1;
+                    horses[horseId].Rank = 1;
                     for (int horseId2 = 0; horseId2 < Constants.HORSE_COUNT; ++horseId2)
                     {
                         if (horseId == horseId2)
@@ -473,12 +481,13 @@
                         {
                             if (horses[horseId].X < horses[horseId2].X)
                             {
-                                rank[horseId]++;
+                                horses[horseId].Rank++;
                             }
                         }
                     }
                 }
 
+                // 모든말이 결승점에 도달하면 Race종료.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
                     if (horses[horseId].X == 95)
@@ -492,44 +501,44 @@
                     }
                 }
 
+                // Race가 끝났는지 판단.
                 if (isRaceEnd)
                 {
                     Console.SetCursorPosition(25, 15);
-                    Console.Write($"당신은 {price[rank[int.Parse(playerChoice) - 1] - 1]}원을 받았습니다.");
-                }
-
-
-                // Temp
-                // 말들의 위치를 처음으로 되돌린다.
-                if (key == ConsoleKey.R)
-                {
-                    for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
-                    {
-                        horses[horseId].X = 0;
-                    }
-                }
-
-                if (key == ConsoleKey.C)
-                {
+                    Console.Write($"당신은 {price[horses[playerChoice - 1].Rank - 1]}원을 받았습니다.");
                     RenderManager.ShowBackDialog();
                     Console.SetCursorPosition(53, 14);
                     string input = Console.ReadLine();
-
                     if (input == "y" || input == "yes")
                     {
-                        Player.Money += price[rank[int.Parse(playerChoice) - 1] - 1];
+                        Player.Money += price[horses[playerChoice - 1].Rank - 1];
                         SceneManager._sceneType = Scene.Town;
                         SceneManager._prevSceneType = Scene.RaceTrack;
                     }
                 }
 
+                // 마을로 돌아갈지 물어보는 부분.
+                //if (key == ConsoleKey.C)
+                //{
+                //    RenderManager.ShowBackDialog();
+                //    Console.SetCursorPosition(53, 14);
+                //    string input = Console.ReadLine();
+                //
+                //    if (input == "y" || input == "yes")
+                //    {
+                //        Player.Money += price[horses[playerChoice - 1].Rank - 1];
+                //        SceneManager._sceneType = Scene.Town;
+                //        SceneManager._prevSceneType = Scene.RaceTrack;
+                //    }
+                //}
 
+                // Scene타입이 다르다면 빠져나가기.
                 if (SceneManager._sceneType != Scene.RaceTrack)
                 {
                     break;
                 }
 
-                Thread.Sleep(200);
+                Thread.Sleep(230);
             }
 
 
@@ -561,7 +570,7 @@
                 // 벽 출력.
                 for (int wallId = 0; wallId < Constants.SHOP_WALL_COUNT; ++wallId)
                 {
-                    RenderManager.RenderObject(walls[wallId].X, walls[wallId].Y, ObjectSymbol.Wall);
+                    RenderManager.RenderObject(walls[wallId].X, walls[wallId].Y, walls[wallId].Shape);
                 }
 
                 // 대화창 출력

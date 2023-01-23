@@ -10,6 +10,9 @@ namespace ConsoleGame
     {
         private int _x;
         private int _y;
+        private int _rank = 1;
+        private int _horseSpeed;
+        private int _id;
         private char _shape;
 
         public int X
@@ -33,6 +36,42 @@ namespace ConsoleGame
             set
             {
                 _y = value;
+            }
+        }
+
+        public int Rank
+        {
+            get
+            {
+                return _rank;
+            }
+            set
+            {
+                _rank = value;
+            }
+        }
+
+        public int HorseSpeed
+        {
+            get
+            {
+                return _horseSpeed;
+            }
+            set
+            {
+                _horseSpeed = value;
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
             }
         }
 

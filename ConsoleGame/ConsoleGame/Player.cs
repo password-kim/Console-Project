@@ -176,8 +176,8 @@ namespace ConsoleGame
                                     }
                                     if (npcs[npcId].Type == NpcType.ShopNpc)
                                     {
-                                        // TODO
-                                        // 가챠구현.
+                                        Card card = GameManager.Gacha(GameManager.CardsTable);
+                                        GameManager.Cards[(int)card.Type]++;
                                     }
                                     break;
                                 case "2":
