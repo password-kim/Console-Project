@@ -8,15 +8,15 @@ namespace ConsoleGame
 {
     internal class GameManager
     {
-        private static int[] _cards = { 0, 0, 0, 0 };
+        private static int[] _cards = { 5, 0, 0, 0 };
         private static int _totalWeight = 100;
 
         private static Card[] _cardsTable = new Card[(int)CardType.MAX]
         {
-            new Card {Type = CardType.Doik, Weight = 40},
-            new Card {Type = CardType.HSJ, Weight = 30},
+            new Card {Type = CardType.Choi, Weight = 10},
             new Card {Type = CardType.Mino, Weight = 20},
-            new Card {Type = CardType.Choi, Weight = 10}
+            new Card {Type = CardType.HSJ, Weight = 30},
+            new Card {Type = CardType.Doik, Weight = 40}
         };
 
         public static int TotalWeight
@@ -91,16 +91,18 @@ namespace ConsoleGame
 
         public static int ChoiceHorse(int playerChoice)
         {
-            Console.SetCursorPosition(26, 13);
-            Console.Write("┌──────────────────────┐");
-            Console.SetCursorPosition(26, 14);
-            Console.Write("│몇번말에 거시겠습니까?│");
-            Console.SetCursorPosition(26, 15);
-            Console.Write("│>>                    │");
-            Console.SetCursorPosition(26, 16);
-            Console.Write("└──────────────────────┘");
-            Console.SetCursorPosition(30, 15);
+            Console.SetCursorPosition(25, 14);
+            Console.Write("몇번말에 거시겠습니까?");
+            Console.SetCursorPosition(25, 15);
+            Console.Write(">> ");
+            Console.SetCursorPosition(28, 15);
             return playerChoice = int.Parse(Console.ReadLine());
+        }
+
+        public static void UseCard(ConsoleKey key)
+        {
+            // TODO
+            // 카드사용 효과
         }
     }
 }

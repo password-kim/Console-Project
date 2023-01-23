@@ -251,9 +251,6 @@
 
         public static void Title()
         {
-            Console.SetWindowSize(150, 50);
-            Console.SetBufferSize(150, 50);
-
             while (true)
             {
                 RenderManager.RenderTitle();
@@ -270,6 +267,7 @@
         public static void Town()
         {
             Console.SetWindowSize(100, 40);
+            Console.SetBufferSize(100, 40);
 
             Player player = new Player();
             Wall[] walls = new Wall[Constants.TOWN_WALL_COUNT];
@@ -345,12 +343,12 @@
                 ConsoleKey key = Console.ReadKey().Key;
 
                 // ========= Update =============
-
                 player.MovePlayer(key);
                 CollisionManager.OnCollisionWithWallInTown(player, walls);
                 CollisionManager.OnCollisionWithNpcInTown(player, npcs);
                 player.TalkToNpc(key, npcs);
 
+                // 플레이어가 상점입구 좌표로 이동하면 상점으로 이동.
                 if ((player.X == 18 || player.X == 19) && player.Y == 0)
                 {
                     SceneManager._sceneType = Scene.Shop;
@@ -412,6 +410,10 @@
                     }
                 }
 
+                
+
+                RenderManager.ShowCardCollection(GameManager.CardsTable, GameManager.Cards);
+
                 // 말 순위표 출력.
                 RenderManager.ShowRank(horses, playerChoice);
 
@@ -435,7 +437,20 @@
                     }
                     isChoice = true;
                 }
-
+                if (isRaceEnd)
+                {
+                    Console.SetCursorPosition(25, 14);
+                    Console.Write($"당신은 {price[horses[playerChoice - 1].Rank - 1]}원을 받았습니다.");
+                    RenderManager.ShowBackDialog();
+                    Console.SetCursorPosition(53, 14);
+                    string input = Console.ReadLine();
+                    if (input == "y" || input == "yes")
+                    {
+                        Player.Money += price[horses[playerChoice - 1].Rank - 1];
+                        SceneManager._sceneType = Scene.Town;
+                        SceneManager._prevSceneType = Scene.RaceTrack;
+                    }
+                }
 
                 // ========= Update =============
 
@@ -446,8 +461,42 @@
 
                 }
 
-                // 말 속력에 따른 X값 업데이트.
-                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
+                if (isRaceEnd == false)
+                {
+                    switch (key)
+                    {
+                        case ConsoleKey.F1:
+                            if (GameManager.Cards[0] != 0)
+                            {
+                                horses[playerChoice - 1].X += 10;
+                                GameManager.Cards[0]--;
+                            }
+                            break;
+                        case ConsoleKey.F2:
+                            if (GameManager.Cards[1] != 0)
+                            {
+                                horses[playerChoice - 1].X += 5;
+                                GameManager.Cards[1]--;
+                            }
+                            break;
+                        case ConsoleKey.F3:
+                            if (GameManager.Cards[2] != 0)
+                            {
+                                horses[playerChoice - 1].X += 3;
+                                GameManager.Cards[2]--;
+                            }
+                            break;
+                        case ConsoleKey.F4:
+                            if (GameManager.Cards[3] != 0)
+                            {
+                                horses[playerChoice - 1].X += 1;
+                                GameManager.Cards[3]--;
+                            }
+                            break;
+                    }
+
+                    // 말 속력에 따른 X값 업데이트.
+                    for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
                     horses[horseId].X += horses[horseId].HorseSpeed;
                     if (horses[horseId].X >= 95)
@@ -456,11 +505,7 @@
                     }
                 }
 
-                switch (key)
-                {
-                    case ConsoleKey.NumPad1:
-                        
-                        break;
+                
                 }
                 // 결승에 도달하면 속도 0으로 초기화.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
@@ -512,10 +557,10 @@
                 // Race가 끝났는지 판단.
                 if (isRaceEnd)
                 {
-                    Console.SetCursorPosition(25, 15);
+                    Console.SetCursorPosition(25, 14);
                     Console.Write($"당신은 {price[horses[playerChoice - 1].Rank - 1]}원을 받았습니다.");
                     RenderManager.ShowBackDialog();
-                    Console.SetCursorPosition(53, 14);
+                    Console.SetCursorPosition(35, 6);
                     string input = Console.ReadLine();
                     if (input == "y" || input == "yes")
                     {

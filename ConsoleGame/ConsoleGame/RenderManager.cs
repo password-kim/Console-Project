@@ -59,15 +59,13 @@ namespace ConsoleGame
 
         public static void ShowBackDialog()
         {
-            Console.SetCursorPosition(50, 12);
+            Console.SetCursorPosition(32, 4);
             Console.Write("┌─────────────────────────────┐");
-            Console.SetCursorPosition(50, 13);
+            Console.SetCursorPosition(32, 5);
             Console.Write("│마을로 돌아가시겠습니까?(y/n)│");
-            Console.SetCursorPosition(50, 14);
+            Console.SetCursorPosition(32, 6);
             Console.Write("│>>                           │");
-            // Console.SetCursorPosition(50, 15);
-            // Console.Write("│");
-            Console.SetCursorPosition(50, 15);
+            Console.SetCursorPosition(32, 7);
             Console.Write("└─────────────────────────────┘");
 
         }
@@ -113,14 +111,12 @@ namespace ConsoleGame
         public static void ShowState(Player player)
         {
             Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y);
-            Console.Write($"PlayerState : {player.PlayerState}");
-            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 1);
             Console.Write($"PlayerDirection : {player.Dir}");
-            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 2);
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 1);
             Console.Write($"Player X : {player.X}");
-            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 3);
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 2);
             Console.Write($"Player Y : {player.Y}");
-            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 4);
+            Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 3);
             Console.Write($"Player Money : {Player.Money}");
             Console.SetCursorPosition(Constants.TOWN_MAX_X + 3, Constants.TOWN_MIN_Y + 5);
             Console.Write("<Card Collection>");
@@ -158,6 +154,20 @@ namespace ConsoleGame
             Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y + 1);
             Console.Write("계속하시려면 엔터를 눌러주세요.");
             Console.ReadLine();
+        }
+
+        public static void ShowCardCollection(Card[] cards, int[] cardCounts)
+        {
+            Console.SetCursorPosition(56, 14);
+            Console.Write("<Card Collection>");
+            Console.SetCursorPosition(56, 15);
+            Console.Write($"{cards[0].Type, 5} : {cardCounts[0], 2}");
+            Console.SetCursorPosition(56, 16);
+            Console.Write($"{cards[1].Type, 5} : {cardCounts[1],2}");
+            Console.SetCursorPosition(56, 17);
+            Console.Write($"{cards[2].Type, 5} : {cardCounts[2],2}");
+            Console.SetCursorPosition(56, 18);
+            Console.Write($"{cards[3].Type, 5} : {cardCounts[3],2}");
         }
 
     }

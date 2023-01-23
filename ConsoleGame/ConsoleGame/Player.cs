@@ -18,7 +18,7 @@ namespace ConsoleGame
 
     enum PlayerState
     {
-        None,
+        Idle,
         Move,
         Talk
     }

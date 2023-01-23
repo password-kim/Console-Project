@@ -21,7 +21,7 @@ namespace ConsoleGame
         public const int TOWN_NPC_COUNT = 1;
 
         public const int RACE_WALL_COUNT = 188;
-        public const int RACE_DIALOG_COUNT = 68;
+        public const int RACE_DIALOG_COUNT = 270;
 
         public const int HORSE_COUNT = 10;
 
