@@ -27,11 +27,12 @@ namespace ConsoleGame
 
         public const int SHOP_NPC_COUNT = 1;
         public const int SHOP_WALL_COUNT = 82;
-        public const int SHOP_DIALOG_COUNT = 70;
+        public const int SHOP_DIALOG_COUNT = 160;
 
         public const int SHOP_DIALOG_MIN_X = 1;
-        public const int SHOP_DIALOG_MIN_Y = 17;
-        public const int FIRST_PRICE = 100;
+        public const int SHOP_DIALOG_MIN_Y = 16;
+        public const int SHOP_GACHA_DIALOG_MIN_X = 1;
+        public const int SHOP_GACHA_DIALOG_MIN_Y = 22;
 
     }
 }

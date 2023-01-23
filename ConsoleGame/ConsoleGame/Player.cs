@@ -176,8 +176,21 @@ namespace ConsoleGame
                                     }
                                     if (npcs[npcId].Type == NpcType.ShopNpc)
                                     {
-                                        Card card = GameManager.Gacha(GameManager.CardsTable);
-                                        GameManager.Cards[(int)card.Type]++;
+                                        if (Money >= 500)
+                                        {
+                                            Money -= 500;
+                                            Card card = GameManager.Gacha(GameManager.CardsTable);
+                                            GameManager.Cards[(int)card.Type]++;
+                                            RenderManager.ShowGachaResult(card);
+                                        }
+                                        else
+                                        {
+                                            Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y);
+                                            Console.Write("돈이 부족합니다..");
+                                            Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y + 1);
+                                            Console.Write("계속하시려면 엔터를 눌러주세요.");
+                                            Console.ReadLine();
+                                        }
                                     }
                                     break;
                                 case "2":

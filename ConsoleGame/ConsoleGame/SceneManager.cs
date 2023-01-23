@@ -4,6 +4,7 @@
     {
         None,
         Title,
+        Story,
         Town,
         RaceTrack,
         Shop,
@@ -251,6 +252,7 @@
         public static void Title()
         {
             Console.SetWindowSize(150, 50);
+            Console.SetBufferSize(150, 50);
 
             while (true)
             {
@@ -454,6 +456,12 @@
                     }
                 }
 
+                switch (key)
+                {
+                    case ConsoleKey.NumPad1:
+                        
+                        break;
+                }
                 // 결승에 도달하면 속도 0으로 초기화.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
@@ -516,21 +524,6 @@
                         SceneManager._prevSceneType = Scene.RaceTrack;
                     }
                 }
-
-                // 마을로 돌아갈지 물어보는 부분.
-                //if (key == ConsoleKey.C)
-                //{
-                //    RenderManager.ShowBackDialog();
-                //    Console.SetCursorPosition(53, 14);
-                //    string input = Console.ReadLine();
-                //
-                //    if (input == "y" || input == "yes")
-                //    {
-                //        Player.Money += price[horses[playerChoice - 1].Rank - 1];
-                //        SceneManager._sceneType = Scene.Town;
-                //        SceneManager._prevSceneType = Scene.RaceTrack;
-                //    }
-                //}
 
                 // Scene타입이 다르다면 빠져나가기.
                 if (SceneManager._sceneType != Scene.RaceTrack)

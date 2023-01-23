@@ -153,7 +153,11 @@ namespace ConsoleGame
 
         public static void ShowGachaResult(Card card)
         {
-            Console.WriteLine();
+            Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y);
+            Console.Write($"{card.Type}카드를 뽑으셨습니다!");
+            Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y + 1);
+            Console.Write("계속하시려면 엔터를 눌러주세요.");
+            Console.ReadLine();
         }
 
     }
