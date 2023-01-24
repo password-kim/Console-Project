@@ -154,7 +154,7 @@
                             horseCounts++;
                             break;
                         case 'E':
-                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'E', Id =5 };
+                            horses[horseCounts] = new Horse { X = x, Y = y, Shape = 'E', Id = 5 };
                             horseCounts++;
                             break;
                         case 'F':
@@ -281,7 +281,7 @@
             {
                 // ========= Render =============
                 Console.Clear();
-                
+
                 // 플레이어 상태 체크
                 RenderManager.ShowState(player);
 
@@ -299,7 +299,7 @@
                     RenderManager.RenderObject(player.X, player.Y, ObjectSymbol.Player);
 
                 }
-                else if(SceneManager._prevSceneType == Scene.RaceTrack)
+                else if (SceneManager._prevSceneType == Scene.RaceTrack)
                 {
                     player.X = 34;
                     player.Y = 10;
@@ -381,7 +381,7 @@
             {
                 // ========= Render =============
                 Console.Clear();
-                
+
                 // 벽 출력.
                 for (int wallId = 0; wallId < Constants.RACE_WALL_COUNT; ++wallId)
                 {
@@ -410,7 +410,7 @@
                     }
                 }
 
-                
+
 
                 RenderManager.ShowCardCollection(GameManager.CardsTable, GameManager.Cards);
 
@@ -463,40 +463,11 @@
 
                 if (isRaceEnd == false)
                 {
-                    switch (key)
-                    {
-                        case ConsoleKey.F1:
-                            if (GameManager.Cards[0] != 0)
-                            {
-                                horses[playerChoice - 1].X += 10;
-                                GameManager.Cards[0]--;
-                            }
-                            break;
-                        case ConsoleKey.F2:
-                            if (GameManager.Cards[1] != 0)
-                            {
-                                horses[playerChoice - 1].X += 5;
-                                GameManager.Cards[1]--;
-                            }
-                            break;
-                        case ConsoleKey.F3:
-                            if (GameManager.Cards[2] != 0)
-                            {
-                                horses[playerChoice - 1].X += 3;
-                                GameManager.Cards[2]--;
-                            }
-                            break;
-                        case ConsoleKey.F4:
-                            if (GameManager.Cards[3] != 0)
-                            {
-                                horses[playerChoice - 1].X += 1;
-                                GameManager.Cards[3]--;
-                            }
-                            break;
-                    }
+                    GameManager.UseCard(key, horses, playerChoice);
+                }
 
-                    // 말 속력에 따른 X값 업데이트.
-                    for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
+                // 말 속력에 따른 X값 업데이트.
+                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
                     horses[horseId].X += horses[horseId].HorseSpeed;
                     if (horses[horseId].X >= 95)
@@ -505,8 +476,8 @@
                     }
                 }
 
-                
-                }
+
+
                 // 결승에 도달하면 속도 0으로 초기화.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
@@ -576,7 +547,7 @@
                     break;
                 }
 
-                Thread.Sleep(230);
+                Thread.Sleep(220);
             }
 
 

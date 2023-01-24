@@ -8,7 +8,7 @@ namespace ConsoleGame
 {
     internal class GameManager
     {
-        private static int[] _cards = { 5, 0, 0, 0 };
+        private static int[] _cards = { 5, 5, 5, 5 };
         private static int _totalWeight = 100;
 
         private static Card[] _cardsTable = new Card[(int)CardType.MAX]
@@ -99,10 +99,65 @@ namespace ConsoleGame
             return playerChoice = int.Parse(Console.ReadLine());
         }
 
-        public static void UseCard(ConsoleKey key)
+        public static void UseCard(ConsoleKey key, Horse[] horses, int playerChoice)
         {
-            // TODO
-            // 카드사용 효과
+            switch (key)
+            {
+                case ConsoleKey.F1:
+                    if (GameManager.Cards[0] != 0)
+                    {
+                        horses[playerChoice - 1].X += 10;
+                        GameManager.Cards[0]--;
+                        Console.SetCursorPosition(25, 20);
+                        Console.Write("Choi 카드 발동!!");
+                        Console.SetCursorPosition(25, 21);
+                        Console.Write("갈!");
+                        Thread.Sleep(300);
+                    }
+                    break;
+                case ConsoleKey.F2:
+                    if (GameManager.Cards[1] != 0)
+                    {
+                        horses[playerChoice - 1].X += 5;
+                        GameManager.Cards[1]--;
+                        Console.SetCursorPosition(25, 20);
+                        Console.Write("Mino 카드 발동!!");
+                        Console.SetCursorPosition(25, 21);
+                        Console.Write("이.진.세.계 !!");
+                        Thread.Sleep(300);
+                    }
+                    break;
+                case ConsoleKey.F3:
+                    if (GameManager.Cards[2] != 0)
+                    {
+                        GameManager.Cards[2]--;
+                        for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
+                        {
+                            if (horseId != playerChoice - 1)
+                            {
+                                horses[horseId].X -= 10;
+                            }
+                        }
+                        Console.SetCursorPosition(25, 20);
+                        Console.Write("HSJ 카드 발동 !!");
+                        Console.SetCursorPosition(25, 21);
+                        Console.Write("나츠짱 사랑해 !!");
+                        Thread.Sleep(300);
+                    }
+                    break;
+                case ConsoleKey.F4:
+                    if (GameManager.Cards[3] != 0)
+                    {
+                        horses[playerChoice - 1].X += 1;
+                        GameManager.Cards[3]--;
+                        Console.SetCursorPosition(25, 20);
+                        Console.Write("Doik 카드 발동!!");
+                        Console.SetCursorPosition(25, 21);
+                        Console.Write("강한친구 대한육군 !!");
+                        Thread.Sleep(300);
+                    }
+                    break;
+            }
         }
     }
 }
