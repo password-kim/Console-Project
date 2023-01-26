@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Media;
+using System.Runtime.CompilerServices;
 
 namespace ConsoleGame
 {
@@ -17,6 +18,12 @@ namespace ConsoleGame
                 {
                     case Scene.Title:
                         SceneManager.Title();
+                        break;
+                    case Scene.Story:
+                        SceneManager.Story();
+                        break;
+                    case Scene.Exit:
+                        SceneManager.Exit();
                         break;
                     case Scene.Town:
                         SceneManager.Town();

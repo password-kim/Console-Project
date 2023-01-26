@@ -8,8 +8,11 @@ namespace ConsoleGame
 {
     enum CardType
     {
-        Choi,
         Mino,
+        Choi,
+        Galaxy,
+        YJK,
+        Eom,
         HSJ,
         Doik,
         MAX

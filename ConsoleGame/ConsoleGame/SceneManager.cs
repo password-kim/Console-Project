@@ -1,4 +1,10 @@
-﻿namespace ConsoleGame
+﻿using System.Drawing;
+using System.Media;
+using System.Numerics;
+using System.Runtime.InteropServices;
+using System.Text;
+
+namespace ConsoleGame
 {
     enum Scene
     {
@@ -16,7 +22,7 @@
         public static Scene _sceneType;
         public static Scene _prevSceneType;
 
-        public static string[] LoadSene(string scene)
+        public static string[] LoadScene(string scene)
         {
             // 1. 경로를 구성한다.
             string sceneFilePath = Path.Combine("Assets", "MapTile", $"{scene}.txt");
@@ -249,33 +255,157 @@
             }
         }
 
+        public static void ParseStoryScene(string[] scene, out Dialog[] dialogs)
+        {
+            string sceneMetaData = scene[scene.Length - 1];
+            dialogs = new Dialog[int.Parse(sceneMetaData)];
+            int dialogCounts = 0;
+            for (int y = 0; y < scene.Length - 1; ++y)
+            {
+                for (int x = 0; x < scene[y].Length; ++x)
+                {
+                    switch (scene[y][x])
+                    {
+                        case ObjectSymbol.DIALOG_LT:
+                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┌' };
+                            dialogCounts++;
+                            break;
+                        case ObjectSymbol.DIALOG_RT:
+                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┐' };
+                            dialogCounts++;
+                            break;
+                        case ObjectSymbol.DIALOG_LD:
+                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '└' };
+                            dialogCounts++;
+                            break;
+                        case ObjectSymbol.DIALOG_RD:
+                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┘' };
+                            dialogCounts++;
+                            break;
+                        case ObjectSymbol.DIALOG_H:
+                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '━' };
+                            dialogCounts++;
+                            break;
+                        case ObjectSymbol.DIALOG_V:
+                            dialogs[dialogCounts] = new Dialog { X = x, Y = y, Shape = '┃' };
+                            dialogCounts++;
+                            break;
+                        case ' ':
+                            break;
+                        default:
+                            GameManager.ExitWithError($"오브젝트 심볼이 잘못되었습니다. {scene[y][x]}");
+                            return;
+                    }
+                }
+            }
+
+        }
+
         public static void Title()
         {
+            Cursor cursor = new Cursor();
+            cursor.X = 80;
+            cursor.Y = 21;
+            SoundPlayer soundPlayer = new SoundPlayer(@"Assets\Sound\Title.wav");
+            soundPlayer.Load();
+            soundPlayer.PlayLooping();
+
             while (true)
             {
+                // ========= Render ==========
+                Console.Clear();
                 RenderManager.RenderTitle();
-                string playerInput = Console.ReadLine();
-                if (playerInput == "1")
+
+                RenderManager.RenderObject(cursor.X, cursor.Y, '◀');
+
+                // ========= Input ==========
+                ConsoleKey key = Console.ReadKey().Key;
+
+                // ========= Update =========
+
+                if (key == ConsoleKey.UpArrow)
                 {
-                    _sceneType = Scene.Town;
-                    break;
+                    cursor.Y = Math.Clamp(cursor.Y - 1, 21, 22);
+                }
+                if (key == ConsoleKey.DownArrow)
+                {
+                    cursor.Y = Math.Clamp(cursor.Y + 1, 21, 22);
+                }
+
+                if (key == ConsoleKey.Enter)
+                {
+                    if (cursor.Y == 21)
+                    {
+                        SceneManager._sceneType = Scene.Story;
+                        break;
+                    }
+                    else
+                    {
+                        SceneManager._sceneType = Scene.Exit;
+                        break;
+                    }
                 }
 
             }
         }
 
+        public static void Story()
+        {
+            Dialog[] dialogs = new Dialog[Constants.STORY_DIALOG_COUNT];
+            string[] scene = LoadScene("Story");
+            ParseStoryScene(scene, out dialogs);
+            while (true)
+            {
+                // ========== Render ============
+                Console.Clear();
+
+                for (int dialogId = 0; dialogId < Constants.STORY_DIALOG_COUNT; ++dialogId)
+                {
+                    RenderManager.RenderObject(dialogs[dialogId].X, dialogs[dialogId].Y, dialogs[dialogId].Shape);
+                }
+
+                RenderManager.RenderStory();
+
+
+                // ========== Input ==============
+                ConsoleKey key = Console.ReadKey().Key;
+
+                // ========== Update =============
+
+
+                if (key == ConsoleKey.Enter)
+                {
+                    SceneManager._sceneType = Scene.Town;
+                    break;
+                }
+            }
+
+        }
+
+        public static void Exit()
+        {
+            Console.Clear();
+            RenderManager.RenderGameExit();
+            Environment.Exit(0);
+        }
+
         public static void Town()
         {
-            Console.SetWindowSize(100, 40);
-            Console.SetBufferSize(100, 40);
 
+            Cursor cursor = new Cursor();
+            cursor.X = Constants.TOWN_DIALOG_MIN_X + 8;
+            cursor.Y = Constants.TOWN_DIALOG_MIN_Y + 1;
             Player player = new Player();
             Wall[] walls = new Wall[Constants.TOWN_WALL_COUNT];
             Npc[] npcs = new Npc[Constants.TOWN_NPC_COUNT];
             Dialog[] dialogs = new Dialog[Constants.TOWN_DIALOG_COUNT];
-
-            string[] scene = LoadSene("Town");
+            bool isPlayerChoice = false;
+            string[] scene = LoadScene("Town");
             ParseTownScene(scene, out player, out walls, out npcs, out dialogs);
+            SoundPlayer soundPlayer = new SoundPlayer(@"Assets\Sound\Town.wav");
+            soundPlayer.Load();
+            soundPlayer.PlayLooping();
+
 
             while (true)
             {
@@ -337,16 +467,30 @@
                         RenderManager.RenderObject(npcs[npcId].X, npcs[npcId].Y, ObjectSymbol.ShopNpc);
                     }
                 }
+                
+                // 커서 출력.
+                if (player.PlayerState == PlayerState.Talk)
+                {
+                    RenderManager.RenderObject(cursor.X, cursor.Y, '◀');
+                }
+
+                RenderManager.ShowGameManual();
 
 
                 // ========= Input ==============
                 ConsoleKey key = Console.ReadKey().Key;
+                
 
                 // ========= Update =============
-                player.MovePlayer(key);
+                if (player.PlayerState != PlayerState.Talk)
+                {
+                    player.MovePlayer(key);
+                }
+                
                 CollisionManager.OnCollisionWithWallInTown(player, walls);
                 CollisionManager.OnCollisionWithNpcInTown(player, npcs);
-                player.TalkToNpc(key, npcs);
+                player.TalkToNpc(key, npcs, isPlayerChoice, cursor);
+                RenderManager.ShowCardEffect(key);
 
                 // 플레이어가 상점입구 좌표로 이동하면 상점으로 이동.
                 if ((player.X == 18 || player.X == 19) && player.Y == 0)
@@ -361,6 +505,7 @@
                     break;
                 }
 
+                //Thread.Sleep(50);
             }
         }
 
@@ -370,16 +515,25 @@
             Dialog[] dialogs = new Dialog[Constants.RACE_DIALOG_COUNT];
             Horse[] horses = new Horse[Constants.HORSE_COUNT];
             int[] horsesSpeed = new int[Constants.HORSE_COUNT];
-            string[] scene = LoadSene("RaceTrack");
+            string[] scene = LoadScene("RaceTrack");
             ParseRaceScene(scene, out walls, out dialogs, out horses);
-            int[] price = { 1000, 900, 800, 100, 100, 100, 50, 30, 10, 0 };
+            int[] price = { 0, 1000, 900, 800, 100, 100, 100, 50, 30, 10, 0 };
             int playerChoice = 0;
             bool isChoice = false;
             bool isRaceEnd = false;
+            bool isRaceStart = false;
+            bool[] isHorseEnd = new bool[Constants.HORSE_COUNT];
+
+            SoundPlayer soundPlayer = new SoundPlayer(@"Assets\Sound\Race.wav");
+            soundPlayer.Load();
+            soundPlayer.PlayLooping();
 
             while (true)
             {
-                // ========= Render =============
+
+                // ===========================
+                // ========= Render ==========
+                // ===========================
                 Console.Clear();
 
                 // 벽 출력.
@@ -410,111 +564,87 @@
                     }
                 }
 
-
-
                 RenderManager.ShowCardCollection(GameManager.CardsTable, GameManager.Cards);
 
                 // 말 순위표 출력.
-                RenderManager.ShowRank(horses, playerChoice);
+                if (isRaceStart)
+                {
+                    RenderManager.ShowRank(horses, playerChoice);
+                }
 
-                // ========= Input ==============
+                // ===========================
+                // ========= Input ===========
+                // ===========================
+
                 ConsoleKey key = ConsoleKey.NoName;
-
                 if (Console.KeyAvailable)
                 {
                     key = Console.ReadKey().Key;
                 }
 
+
                 if (false == isChoice)
                 {
                     while (true)
                     {
-                        playerChoice = GameManager.ChoiceHorse(playerChoice);
+                        playerChoice = GameManager.ChoiceHorse();
                         if (1 <= playerChoice && playerChoice <= 10)
                         {
                             break;
                         }
                     }
                     isChoice = true;
+                    isRaceStart = true;
                 }
+
                 if (isRaceEnd)
                 {
                     Console.SetCursorPosition(25, 14);
-                    Console.Write($"당신은 {price[horses[playerChoice - 1].Rank - 1]}원을 받았습니다.");
+                    Console.Write($"당신은 {price[horses[playerChoice - 1].Rank]}원을 받았습니다.");
                     RenderManager.ShowBackDialog();
-                    Console.SetCursorPosition(53, 14);
+                    Console.SetCursorPosition(86, 15);
                     string input = Console.ReadLine();
                     if (input == "y" || input == "yes")
                     {
-                        Player.Money += price[horses[playerChoice - 1].Rank - 1];
+                        Player.Money += price[horses[playerChoice - 1].Rank];
                         SceneManager._sceneType = Scene.Town;
                         SceneManager._prevSceneType = Scene.RaceTrack;
+                        break;
                     }
                 }
 
-                // ========= Update =============
+                // ===========================
+                // ========= Update ==========
+                // ===========================
 
-                // 말 속력출력.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
-                    horses[horseId].HorseSpeed = (int)(1 + RandomManager.GetInctance.NextDouble() * 3);
-
+                    horses[horseId].HorseSpeed = 0;
                 }
 
-                if (isRaceEnd == false)
+                // 말 속력할당.
+                GameManager.AssignHorseSpeed(isHorseEnd, horses);
+
+                // 말 속력에 따른 X값 업데이트.
+                GameManager.CalculateHorseDistance(isHorseEnd, horses);
+
+                // 순위계산.
+                if (false == isRaceEnd)
+                {
+                    GameManager.CheckRank(horses, isHorseEnd);
+                }
+
+                // 카드사용시 효과발동하는 부분.
+                if (horses[playerChoice - 1].X < 120)
                 {
                     GameManager.UseCard(key, horses, playerChoice);
                 }
 
-                // 말 속력에 따른 X값 업데이트.
-                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
-                {
-                    horses[horseId].X += horses[horseId].HorseSpeed;
-                    if (horses[horseId].X >= 95)
-                    {
-                        horses[horseId].X = 95;
-                    }
-                }
-
-
-
-                // 결승에 도달하면 속도 0으로 초기화.
-                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
-                {
-                    if (horses[horseId].X == 95)
-                    {
-                        horses[horseId].HorseSpeed = 0;
-                    }
-                }
-
-                // 말 순위계산.
-                for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
-                {
-                    if (horses[horseId].X == 95)
-                    {
-                        continue;
-                    }
-                    horses[horseId].Rank = 1;
-                    for (int horseId2 = 0; horseId2 < Constants.HORSE_COUNT; ++horseId2)
-                    {
-                        if (horseId == horseId2)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            if (horses[horseId].X < horses[horseId2].X)
-                            {
-                                horses[horseId].Rank++;
-                            }
-                        }
-                    }
-                }
 
                 // 모든말이 결승점에 도달하면 Race종료.
                 for (int horseId = 0; horseId < Constants.HORSE_COUNT; ++horseId)
                 {
-                    if (horses[horseId].X == 95)
+                    if (isHorseEnd[horseId] == true)
                     {
                         isRaceEnd = true;
                     }
@@ -529,16 +659,7 @@
                 if (isRaceEnd)
                 {
                     Console.SetCursorPosition(25, 14);
-                    Console.Write($"당신은 {price[horses[playerChoice - 1].Rank - 1]}원을 받았습니다.");
-                    RenderManager.ShowBackDialog();
-                    Console.SetCursorPosition(35, 6);
-                    string input = Console.ReadLine();
-                    if (input == "y" || input == "yes")
-                    {
-                        Player.Money += price[horses[playerChoice - 1].Rank - 1];
-                        SceneManager._sceneType = Scene.Town;
-                        SceneManager._prevSceneType = Scene.RaceTrack;
-                    }
+                    Console.Write($"당신은 {price[horses[playerChoice - 1].Rank]}원을 받았습니다.");
                 }
 
                 // Scene타입이 다르다면 빠져나가기.
@@ -547,7 +668,7 @@
                     break;
                 }
 
-                Thread.Sleep(220);
+                Thread.Sleep(200);
             }
 
 
@@ -555,13 +676,14 @@
 
         public static void ShopScene()
         {
-            Console.SetWindowSize(100, 40);
+            Cursor cursor = new Cursor();
             Player player = new Player();
             Npc[] npcs = new Npc[Constants.SHOP_NPC_COUNT];
             Wall[] walls = new Wall[Constants.SHOP_WALL_COUNT];
             Dialog[] dialogs = new Dialog[Constants.SHOP_DIALOG_COUNT];
+            bool isPlayerChoice = false;
 
-            string[] scene = LoadSene("Shop");
+            string[] scene = LoadScene("Shop");
             ParseShopScene(scene, out player, out walls, out npcs, out dialogs);
 
             while (true)
@@ -610,7 +732,8 @@
                 player.MovePlayer(key);
                 CollisionManager.OnCollisionWithWallInShop(player, walls);
                 CollisionManager.OnCollisionWithNpcInShop(player, npcs);
-                player.TalkToNpc(key, npcs);
+                player.TalkToNpc(key, npcs, isPlayerChoice, cursor);
+                RenderManager.ShowCardEffect(key);
 
                 if ((player.X == 13 || player.X == 14) && player.Y == 14)
                 {

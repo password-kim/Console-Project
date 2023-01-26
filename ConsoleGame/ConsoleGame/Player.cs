@@ -133,7 +133,7 @@ namespace ConsoleGame
             }
         }
 
-        public void TalkToNpc(ConsoleKey key, Npc[] npcs)
+        public void TalkToNpc(ConsoleKey key, Npc[] npcs, bool isPlayerChoice, Cursor cursor)
         {
             if (key == ConsoleKey.Spacebar)
             {
@@ -147,56 +147,19 @@ namespace ConsoleGame
                     {
                         if (_x + dirX[i] == npcs[npcId].X && _y + dirY[i] == npcs[npcId].Y)
                         {
-                            string playerInput = "";
                             _playerState = PlayerState.Talk;
                             switch (npcs[npcId].Type)
                             {
                                 case NpcType.RaceNpc:
-                                    npcs[npcId].SayToPlayer(npcs[npcId].Type);
-                                    Console.SetCursorPosition(Constants.TOWN_DIALOG_MIN_X + 2, Constants.TOWN_DIALOG_MIN_Y + 3);
-                                    playerInput = Console.ReadLine();
+                                    npcs[npcId].SayToPlayer(npcs[npcId].Type, isPlayerChoice, cursor, ref _playerState);
                                     break;
                                 case NpcType.ShopNpc:
-                                    npcs[npcId].SayToPlayer(npcs[npcId].Type);
-                                    Console.SetCursorPosition(Constants.SHOP_DIALOG_MIN_X + 2, Constants.SHOP_DIALOG_MIN_Y + 3);
-                                    playerInput = Console.ReadLine();
+                                    npcs[npcId].SayToPlayer(npcs[npcId].Type, isPlayerChoice, cursor, ref _playerState);
                                     break;
                                 default:
                                     GameManager.ExitWithError($"잘못된 NPC타입입니다. {npcs[npcId].Type}");
                                     break;
                             }
-
-                            switch (playerInput)
-                            {
-                                case "1":
-                                    if (npcs[npcId].Type == NpcType.RaceNpc)
-                                    {
-                                        SceneManager._sceneType = Scene.RaceTrack;
-                                        SceneManager._prevSceneType = Scene.Town;
-                                    }
-                                    if (npcs[npcId].Type == NpcType.ShopNpc)
-                                    {
-                                        if (Money >= 500)
-                                        {
-                                            Money -= 500;
-                                            Card card = GameManager.Gacha(GameManager.CardsTable);
-                                            GameManager.Cards[(int)card.Type]++;
-                                            RenderManager.ShowGachaResult(card);
-                                        }
-                                        else
-                                        {
-                                            Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y);
-                                            Console.Write("돈이 부족합니다..");
-                                            Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y + 1);
-                                            Console.Write("계속하시려면 엔터를 눌러주세요.");
-                                            Console.ReadLine();
-                                        }
-                                    }
-                                    break;
-                                case "2":
-                                    break;
-                            }
-
                         }
                     }
                 }
