@@ -16,6 +16,7 @@ namespace ConsoleGame
         Down
     }
 
+
     enum PlayerState
     {
         Idle,
@@ -27,7 +28,7 @@ namespace ConsoleGame
     {
         private int _x;
         private int _y;
-        private static int _money = 0;
+        private static int _money = 5000;
         private string _icon;
         private Direction _playerDirection;
         private PlayerState _playerState;

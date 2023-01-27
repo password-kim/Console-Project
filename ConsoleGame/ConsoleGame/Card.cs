@@ -10,8 +10,8 @@ namespace ConsoleGame
     {
         Mino,
         Choi,
-        Galaxy,
         YJK,
+        Galaxy,
         Eom,
         HSJ,
         Doik,

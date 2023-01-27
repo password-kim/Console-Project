@@ -128,22 +128,6 @@
 
         }
 
-        public static void ShowRankTest(int[] rank)
-        {
-            Console.SetCursorPosition(21, 10);
-            Console.Write($"{rank[0]}");
-            Console.SetCursorPosition(21, 11);
-            Console.Write($"{rank[1]}");
-            Console.SetCursorPosition(21, 12);
-            Console.Write($"{rank[2]}");
-            Console.SetCursorPosition(21, 13);
-            Console.Write($"{rank[3]}");
-            Console.SetCursorPosition(21, 14);
-            Console.Write($"{rank[4]}");
-            Console.SetCursorPosition(21, 15);
-            Console.Write($"{rank[5]}");
-        }
-
         public static void ShowGachaResult(Card card)
         {
             Console.SetCursorPosition(Constants.SHOP_GACHA_DIALOG_MIN_X, Constants.SHOP_GACHA_DIALOG_MIN_Y);
